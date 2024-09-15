@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box - Özel Çalışma Alanınızı Oluşturun</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #7f5af0;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1201; /* Menü simgesinin her şeyin üstünde kalması için yüksek z-index */
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            transition: all 0.3s linear;
+        }
+
+        nav {
+            transition: transform 0.3s ease-in-out;
+            z-index: 1200;
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .sign-in-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        .text-content {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .new-feature {
+            background-color: #fde8e9;
+            color: #ff4d8e;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .get-started-btn {
+            background-color: #7f5af0;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background-color: #6b46c1;
+        }
+
+        .workspace-image {
+            flex: 1;
+            max-width: 50%;
+            position: relative;
+            z-index: 100;
+        }
+
+        .workspace-3d {
+            width: 100%;
+            height: 400px;
+            background-color: #fde8e9;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workspace-3d img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .navigation-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: #7f5af0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            margin-right: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+
+        .nav-arrow:hover {
+            background-color: #6b46c1;
+        }
+
+        .slide-info {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #fff;
+                padding: 80px 20px;
+                transform: translateX(100%);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 1100; /* Menünün daha düşük bir z-index'e sahip olması */
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 20px 0;
+            }
+
+            .main-content {
+                flex-direction: column;
+                margin-top: 40px;
+            }
+
+            .text-content, .workspace-image {
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .workspace-3d {
+                height: 300px;
+                margin-top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">box.</span>
+            </div>
+            <button class="menu-toggle" aria-label="Menüyü aç">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#">Planlar</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">İş</a></li>
+                    <li><a href="#">Özellikler</a></li>
+                    <li><a href="#" class="sign-in-btn">Giriş Yap</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="main-content">
+            <div class="text-content">
+                <span class="new-feature">YENİ ÖZELLİK</span>
+                <h1>Özel Çalışma Alanınızı Oluşturun.</h1>
+                <p>Her işin yürütülmesi için kendi alanınızı oluşturun.</p>
+                <a href="#" class="get-started-btn">Başlayın</a>
+                <div class="navigation-controls">
+                    <div class="nav-arrow" id="prev-arrow">&lt;</div>
+                    <div class="nav-arrow" id="next-arrow">&gt;</div>
+                    <span class="slide-info">01. Yaratıcı Çalışma Alanı Vol. 2</span>
+                </div>
+            </div>
+            <div class="workspace-image">
+                <div class="workspace-3d">
+                    <img src="resim1.png"
+                         alt="Çalışma Alanı Görseli" class="workspace-image" id="workspace-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        const workspaceImage = document.getElementById('workspace-image');
+        const prevArrow = document.getElementById('prev-arrow');
+        const nextArrow = document.getElementById('next-arrow');
+        const toggleSpans = menuToggle.querySelectorAll('span');
+
+        let currentImage = 0;
+        const images = [
+            'resim1.png',  // İlk resim
+            'resim2.png',  // İkinci resim
+            'resim3.png'   // Üçüncü resim
+        ];
+
+        // Menü toggle işlevi
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            
+            // Menü ikonunu X şekline dönüştürme
+            toggleSpans[0].style.transform = nav.classList.contains('active') ? 'rotate(45deg) translateY(8px)' : 'rotate(0)';
+            toggleSpans[1].style.opacity = nav.classList.contains('active') ? '0' : '1';
+            toggleSpans[2].style.transform = nav.classList.contains('active') ? 'rotate(-45deg) translateY(-8px)' : 'rotate(0)';
+        });
+
+        // Sol ok tuşu ile önceki resmi göster
+        prevArrow.addEventListener('click', () => {
+            currentImage = (currentImage === 0) ? images.length - 1 : currentImage - 1;
+            workspaceImage.src = images[currentImage];
+        });
+
+        // Sağ ok tuşu ile sonraki resmi göster
+        nextArrow.addEventListener('click', () => {
+            currentImage = (currentImage === images.length - 1) ? 0 : currentImage + 1;
+            workspaceImage.src = images[currentImage];
+        });
+    </script>
+    <!-- Font Awesome kütüphanesini başa ekleyin -->
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<footer style="background-color: #333; color: #fff; padding: 40px 20px; margin-top: 100px;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: flex-start;">
+            <!-- Footer Logo ve Tanıtım -->
+            <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div class="logo-icon" style="background-color: #fff; width: 40px; height: 40px;"></div>
+                    <span class="logo-text" style="font-size: 24px; font-weight: 700; color: #fff; margin-left: 10px;">box.</span>
+                </div>
+                <p style="color: #999; line-height: 1.6;">
+                    Box, her işin yürütülmesi için ihtiyacınız olan özel çalışma alanlarını oluşturmanızı sağlar. Verimliliğinizi artırın, organize olun ve işlerinizi kolayca halledin.
+                </p>
+            </div>
+
+            <!-- Footer Bağlantılar -->
+            <div style="flex: 1; min-width: 150px; margin-bottom: 20px;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">Bağlantılar</h3>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="#" style="text-decoration: none; color: #999;">Planlar</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #999;">Özellikler</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #999;">Blog</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #999;">Destek</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Sosyal Medya -->
+            <div style="flex: 1; min-width: 150px; margin-bottom: 20px;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">Bizi Takip Edin</h3>
+                <ul style="list-style: none; padding: 0; display: flex; gap: 15px;">
+                    <li><a href="#" style="text-decoration: none; color: #fff;"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" style="text-decoration: none; color: #fff;"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" style="text-decoration: none; color: #fff;"><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="https://www.instagram.com/adil_oguzzz?igsh=Nm5laXkwMjExYzZo" style="text-decoration: none; color: #fff;"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+
+            <!-- Footer İletişim -->
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px;">İletişim</h3>
+                <p style="color: #999; line-height: 2;">info@adiloguz.com</p>
+                <p style="color: #999; line-height: 2;">+90 123 456 7890</p>
+            </div>
+        </div>
+
+        <!-- Footer Alt Bilgi -->
+        <div style="text-align: center; border-top: 1px solid #555; padding-top: 20px; margin-top: 40px; color: #999;">
+            <p>&copy; 2024 Geliştirici Adil Oğuz. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+</footer>
+    
+</body>
+</html>
